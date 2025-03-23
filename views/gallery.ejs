@@ -80,6 +80,53 @@
             <img src="/img/project10.png" alt="Gallery Image 20">
         </div>
     </div>
+
+<!-- Display Gallery Images -->
+    <div class="row g-4">
+        <% images.forEach(image => { %>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <img src="<%= image.imageUrl %>" class="card-img-top" alt="<%= image.altText %>">
+                <div class="card-body">
+                    <p class="card-text"><%= image.altText %></p>
+                </div>
+                <div class="card-footer text-center">
+                    <!-- Update Image Form -->
+                    <form action="/gallery/update/<%= image.id %>" method="POST" class="mb-2">
+                        <input type="text" name="imageUrl" value="<%= image.imageUrl %>" class="form-control mb-2" required>
+                        <input type="text" name="altText" value="<%= image.altText %>" class="form-control mb-2" required>
+                        <button type="submit" class="btn btn-warning btn-sm">Update</button>
+                    </form>
+                    <!-- Delete Image Form -->
+                    <form action="/gallery/delete/<%= image.id %>" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <!-- Add New Image -->
+    <div class="d-flex justify-content-center align-items-center mt-5">
+        <div class="w-50">
+            <h2 class="text-center mb-4">Add a New Image</h2>
+            <form action="/gallery" method="POST" class="p-4 border rounded bg-white shadow-sm">
+                <div class="mb-3">
+                    <label for="imageUrl" class="form-label">Image URL or Path</label>
+                    <input type="text" id="imageUrl" name="imageUrl" class="form-control" placeholder="Enter image URL or local path" required>
+                </div>
+                <div class="mb-3">
+                    <label for="altText" class="form-label">Alt Text</label>
+                    <input type="text" id="altText" name="altText" class="form-control" placeholder="Enter image alt text" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Add Image</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
   </section>
 
   <%- include('partials/footer') %>
