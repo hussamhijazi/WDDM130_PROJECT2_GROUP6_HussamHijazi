@@ -152,6 +152,53 @@ app.post('/gallery/delete/:id', async (req, res) => {
     }
 });
 
+// Read all Reviews
+app.get('/reviews', async (req, res) => {
+    try {
+        const reviews = await Review.findAll();
+        res.render('reviews', { title: 'Reviews', reviews });
+    } catch (error) {
+        console.error('Error retrieving reviews:', error);
+        res.status(500).send('Error retrieving reviews');
+    }
+});
+
+// Create a Review
+app.post('/reviews', async (req, res) => {
+    try {
+        await Review.create(req.body);
+        console.log("Review added successfully");
+        res.redirect('/reviews');
+    } catch (error) {
+        console.error('Error adding review:', error);
+        res.status(500).send('Error adding review');
+    }
+});
+
+// Update a Review
+app.post('/reviews/update/:id', async (req, res) => {
+    try {
+        await Review.update(req.body, { where: { id: req.params.id } });
+        console.log("Review updated successfully");
+        res.redirect('/reviews');
+    } catch (error) {
+        console.error('Error updating review:', error);
+        res.status(500).send('Error updating review');
+    }
+});
+
+// Delete a Review
+app.post('/reviews/delete/:id', async (req, res) => {
+    try {
+        await Review.destroy({ where: { id: req.params.id } });
+        console.log("Review deleted successfully");
+        res.redirect('/reviews');
+    } catch (error) {
+        console.error('Error deleting review:', error);
+        res.status(500).send('Error deleting review');
+    }
+});
+
 // Other Routes
 app.get('/', (req, res) => {
     res.render('home', { 
@@ -211,13 +258,6 @@ app.get('/project3', (req, res) => {
         location: 'Abdoun, Amman',
         designer: 'Wissam Hijazi',
         description: 'Situated in the prestigious Abdoun area of Amman, this luxury villa project showcases exceptional door work throughout the property. Our work included designing and crafting custom wooden doors with a variety of finishes to complement the villa interior design. Each door was meticulously constructed to ensure both functionality and aesthetic appeal, enhancing the overall elegance of the residence.',
-    });
-});
-
-app.get('/reviews', (req, res) => {
-    res.render('reviews', { 
-        title: 'Reviews', 
-        header: 'What Our Clients Say' 
     });
 });
 
