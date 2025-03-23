@@ -34,6 +34,12 @@ const Gallery = sequelize.define("Gallery", {
     altText: { type: Sequelize.STRING, allowNull: false }
 });
 
+// Define Review model
+const Review = sequelize.define("Review", {
+    name: { type: Sequelize.STRING, allowNull: false },
+    location: { type: Sequelize.STRING, allowNull: true },
+    text: { type: Sequelize.TEXT, allowNull: false },
+});
 
 // Middleware to parse JSON and form data
 app.use(express.json());
