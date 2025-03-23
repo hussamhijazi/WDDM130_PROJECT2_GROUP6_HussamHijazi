@@ -80,6 +80,64 @@
             </div>
         </div>
     </div>
+
+    <!-- Display Blogs -->
+    <div class="row g-4">
+        <% blogs.forEach(blog => { %>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <img src="<%= blog.image %>" class="card-img-top" alt="<%= blog.title %>">
+                <div class="card-body">
+                    <h5 class="card-title"><%= blog.title %></h5>
+                    <p class="card-text"><%= blog.excerpt %></p>
+                    <a href="<%= blog.url %>" target="_blank" class="btn btn-primary">Read More</a>
+                </div>
+                <div class="card-footer text-center">
+                    <!-- Update Blog Form -->
+                    <form action="/blog/update/<%= blog.id %>" method="POST" class="mb-2">
+                        <input type="text" name="title" value="<%= blog.title %>" class="form-control mb-2" required>
+                        <input type="text" name="image" value="<%= blog.image %>" class="form-control mb-2" required>
+                        <input type="text" name="url" value="<%= blog.url %>" class="form-control mb-2" required>
+                        <textarea name="excerpt" class="form-control mb-2" required><%= blog.excerpt %></textarea>
+                        <button type="submit" class="btn btn-warning btn-sm">Update</button>
+                    </form>
+                    <!-- Delete Blog Form -->
+                    <form action="/blog/delete/<%= blog.id %>" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <!-- Add New Blog -->
+    <div class="d-flex justify-content-center align-items-center mt-5">
+        <div class="w-50">
+            <h2 class="text-center mb-4">Add a New Blog</h2>
+            <form action="/blog" method="POST" class="p-4 border rounded bg-white shadow-sm">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="Blog Title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image URL</label>
+                    <input type="text" id="image" name="image" class="form-control" placeholder="Blog Image URL" required>
+                </div>
+                <div class="mb-3">
+                    <label for="url" class="form-label">Blog URL</label>
+                    <input type="text" id="url" name="url" class="form-control" placeholder="Blog Post Link" required>
+                </div>
+                <div class="mb-3">
+                    <label for="excerpt" class="form-label">Excerpt</label>
+                    <textarea id="excerpt" name="excerpt" class="form-control" rows="3" placeholder="Blog Excerpt" required></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Add Blog</button>
+                </div>
+            </form>
+        </div>
+    </div>
   </section>
 
   <%- include('partials/footer') %>
