@@ -19,6 +19,15 @@ sequelize.authenticate()
     .then(() => console.log('Database connected successfully.'))
     .catch(err => console.log('Database connection error:', err));
 
+// Define Project model
+const Project = sequelize.define("Project", {
+    title: { type: Sequelize.STRING, allowNull: false },
+    location: { type: Sequelize.STRING, allowNull: false },
+    designer: { type: Sequelize.STRING, allowNull: false },
+    description: { type: Sequelize.TEXT, allowNull: false },
+    image: { type: Sequelize.STRING, allowNull: true }
+});
+
 // Middleware to parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
