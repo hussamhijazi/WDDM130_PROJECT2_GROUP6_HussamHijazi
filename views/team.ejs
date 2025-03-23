@@ -38,6 +38,64 @@
             <div class="team-description">Wissam brings over a three years of experience in design, specializing in innovative and sustainable solutions. He is known for his creativity and attention to detail in both residential.</div>
         </div>
     </div>
+    
+    <!-- Display Team Members -->
+    <div class="row g-4">
+        <% team.forEach(member => { %>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <img src="/img/<%= member.image %>" class="card-img-top" alt="<%= member.name %>">
+                <div class="card-body">
+                    <h5 class="card-title"><%= member.name %></h5>
+                    <p class="text-muted"><%= member.title %></p>
+                    <p class="card-text"><%= member.description %></p>
+                </div>
+                <div class="card-footer text-center">
+                    <!-- Update Team Member Form -->
+                    <form action="/team/update/<%= member.id %>" method="POST" class="mb-2">
+                        <input type="text" name="name" value="<%= member.name %>" class="form-control mb-2" required>
+                        <input type="text" name="title" value="<%= member.title %>" class="form-control mb-2" required>
+                        <textarea name="description" class="form-control mb-2" required><%= member.description %></textarea>
+                        <input type="text" name="image" value="<%= member.image %>" class="form-control mb-2">
+                        <button type="submit" class="btn btn-warning btn-sm">Update</button>
+                    </form>
+                    <!-- Delete Team Member Form -->
+                    <form action="/team/delete/<%= member.id %>" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <!-- Add New Team Member -->
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="w-50">
+            <h2 class="text-center mb-4">Add a New Team Member</h2>
+            <form action="/team" method="POST" class="p-4 border rounded bg-white shadow-sm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Team Member Name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="Team Member Title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Team Member Description" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image URL</label>
+                    <input type="text" id="image" name="image" class="form-control" placeholder="Image URL">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Add Team Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
   </section>
 
   <%- include('partials/footer') %>
