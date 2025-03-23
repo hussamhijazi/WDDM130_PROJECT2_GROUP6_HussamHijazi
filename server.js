@@ -38,7 +38,56 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static('public'));
 
-// Routes
+// CRUD Routes
+
+// Read all projects
+app.get('/projects', async (req, res) => {
+    try {
+        const projects = await Project.findAll();
+        res.render('projects', { title: 'Projects', projects });
+    } catch (error) {
+        console.error('Error retrieving projects:', error);
+        res.status(500).send('Error retrieving projects');
+    }
+});
+
+// Create a new project
+app.post('/projects', async (req, res) => {
+    try {
+        await Project.create(req.body);
+        console.log("Project added successfully");
+        res.redirect('/projects');
+    } catch (error) {
+        console.error('Error adding project:', error);
+        res.status(500).send('Error adding project');
+    }
+});
+
+// Update a project
+app.post('/projects/update/:id', async (req, res) => {
+    try {
+        await Project.update(req.body, { where: { id: req.params.id } });
+        console.log("Project updated successfully");
+        res.redirect('/projects');
+    } catch (error) {
+        console.error('Error updating project:', error);
+        res.status(500).send('Error updating project');
+    }
+});
+
+// Delete a project
+app.post('/projects/delete/:id', async (req, res) => {
+    try {
+        await Project.destroy({ where: { id: req.params.id } });
+        console.log("Project deleted successfully");
+        res.redirect('/projects');
+    } catch (error) {
+        console.error('Error deleting project:', error);
+        res.status(500).send('Error deleting project');
+    }
+});
+
+// Other Routes
 app.get('/', (req, res) => {
     res.render('home', { 
         title: 'Home', 
@@ -67,14 +116,6 @@ app.get('/services', (req, res) => {
         message2: 'Enhance your commercial spaces with our professional services.',
         header3: 'Other Services', 
         message3: 'Discover more ways we can help you with our additional services.',
-     });
-});
-
-app.get('/projects', (req, res) => {
-    res.render('projects', { 
-        title: 'Projects', 
-        header: 'Our Projects', 
-        message: 'Discover the amazing projects we have completed.'
      });
 });
 
