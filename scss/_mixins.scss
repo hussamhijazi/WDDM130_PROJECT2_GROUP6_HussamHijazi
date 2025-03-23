@@ -1,0 +1,32 @@
+@mixin button-style($bg-color, $text-color) {
+    background-color: $bg-color; 
+    color: $text-color; 
+    border: none; 
+    padding: 0.75rem 1.25rem; 
+    border-radius: 4px; 
+    transition: background-color 0.2s ease-in-out; 
+  
+    &:hover {
+      background-color: darken($bg-color, 10%); 
+    }
+  }
+  
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+@mixin media-query($size) {
+  @if $size == small {
+      @media (max-width: $small-screen) { @content; }
+  }
+  @else if $size == medium {
+      @media (max-width: $medium-screen) { @content; }
+  }
+  @else if $size == large {
+      @media (max-width: $large-screen) { @content; }
+  }
+}

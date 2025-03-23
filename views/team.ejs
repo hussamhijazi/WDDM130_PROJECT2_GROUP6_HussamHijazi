@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/twstyles.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <title><%= title %></title>
+</head>
+<body class="bg-gray-100">
+
+  <%- include('partials/header') %>
+
+  <!-- Team Section -->
+  <section class="team">
+    <div class="team-header">
+        <h1><%= header %></h1> 
+        <p><%= message %></p>
+    </div>
+    <div class="team-list">
+        <div class="team-item">
+            <img src="/img/logo.png" alt="Team Member 1">
+            <div class="team-name">Mohammed Jaber</div>
+            <div class="team-title">Chief Executive Officer</div>
+            <div class="team-description">Mohammed has over 15 years of experience in the industry and leads our team with passion and dedication.</div>
+        </div>
+        <div class="team-item">
+            <img src="/img/logo.png" alt="Team Member 2">
+            <div class="team-name">Hussam Hijazi</div>
+            <div class="team-title">Project Coordinator</div>
+            <div class="team-description">Hussam manages residential and commercial interior design projects from concept to execution, ensuring client satisfaction, budget adherence, and quality standards, while also creating detailed visualizations and overseeing.</div>
+        </div>
+        <div class="team-item">
+            <img src="/img/logo.png" alt="Team Member 3">
+            <div class="team-name">Wissam Hijazi</div>
+            <div class="team-title">Designer</div>
+            <div class="team-description">Wissam brings over a three years of experience in design, specializing in innovative and sustainable solutions. He is known for his creativity and attention to detail in both residential.</div>
+        </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
