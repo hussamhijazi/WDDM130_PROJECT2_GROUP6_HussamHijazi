@@ -58,6 +58,12 @@ const Blog = sequelize.define("Blog", {
     reactions: { type: Sequelize.INTEGER, defaultValue: 0 } 
 });
 
+// Define Contact model
+const Contact = sequelize.define("Contact", {
+    name: { type: Sequelize.STRING, allowNull: false },
+    email: { type: Sequelize.STRING, allowNull: false },
+    message: { type: Sequelize.TEXT, allowNull: false }
+});
 
 // Middleware to parse JSON and form data
 app.use(express.json());
