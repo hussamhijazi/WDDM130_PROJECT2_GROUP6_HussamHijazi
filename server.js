@@ -264,6 +264,54 @@ app.post('/team/delete/:id', async (req, res) => {
     }
 });
 
+// Read all Blog
+app.get('/blog', async (req, res) => {
+    try {
+        const blogs = await Blog.findAll();
+        res.render('blog', { title: 'Design Blog', header: 'Design Blog', message: 'Stay updated with the latest design trends.', blogs });
+    } catch (error) {
+        console.error('Error retrieving blogs:', error);
+        res.status(500).send('Error retrieving blogs');
+    }
+});
+
+// Create a Blog
+app.post('/blog', async (req, res) => {
+    try {
+        await Blog.create(req.body);
+        console.log("Blog added successfully");
+        res.redirect('/blog');
+    } catch (error) {
+        console.error('Error adding blog:', error);
+        res.status(500).send('Error adding blog');
+    }
+});
+
+// Update a Blog
+app.post('/blog/update/:id', async (req, res) => {
+    try {
+        await Blog.update(req.body, { where: { id: req.params.id } });
+        console.log("Blog updated successfully");
+        res.redirect('/blog');
+    } catch (error) {
+        console.error('Error updating blog:', error);
+        res.status(500).send('Error updating blog');
+    }
+});
+
+// Delete a Blog
+app.post('/blog/delete/:id', async (req, res) => {
+    try {
+        await Blog.destroy({ where: { id: req.params.id } });
+        console.log("Blog deleted successfully");
+        res.redirect('/blog');
+    } catch (error) {
+        console.error('Error deleting blog:', error);
+        res.status(500).send('Error deleting blog');
+    }
+});
+
+
 // Other Routes
 app.get('/', (req, res) => {
     res.render('home', { 
@@ -323,14 +371,6 @@ app.get('/project3', (req, res) => {
         location: 'Abdoun, Amman',
         designer: 'Wissam Hijazi',
         description: 'Situated in the prestigious Abdoun area of Amman, this luxury villa project showcases exceptional door work throughout the property. Our work included designing and crafting custom wooden doors with a variety of finishes to complement the villa interior design. Each door was meticulously constructed to ensure both functionality and aesthetic appeal, enhancing the overall elegance of the residence.',
-    });
-});
-
-app.get('/blog', (req, res) => {
-    res.render('blog', { 
-        title: 'Design Blog', 
-        header: 'Design Blog', 
-        message: 'Stay updated with the latest design trends and tips from our experts.' ,
     });
 });
 
