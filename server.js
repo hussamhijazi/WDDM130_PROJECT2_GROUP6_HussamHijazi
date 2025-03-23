@@ -49,6 +49,15 @@ const TeamMember = sequelize.define("TeamMember", {
     image: { type: Sequelize.STRING, allowNull: true }
 });
 
+// Define Blog model
+const Blog = sequelize.define("Blog", {
+    title: { type: Sequelize.STRING, allowNull: false },
+    image: { type: Sequelize.STRING, allowNull: false },
+    excerpt: { type: Sequelize.TEXT, allowNull: false },
+    url: { type: Sequelize.STRING, allowNull: false },
+    reactions: { type: Sequelize.INTEGER, defaultValue: 0 } 
+});
+
 
 // Middleware to parse JSON and form data
 app.use(express.json());
