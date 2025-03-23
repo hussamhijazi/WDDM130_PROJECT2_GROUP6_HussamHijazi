@@ -317,6 +317,94 @@ app.post('/blog/delete/:id', async (req, res) => {
     }
 });
 
+// Create a Contact inquiry
+app.post('/contact', async (req, res) => {
+    try {
+        await Contact.create(req.body); // Add new contact inquiry
+        const submissions = await Contact.findAll(); // Fetch updated submissions
+        console.log("Contact inquiry added successfully");
+        res.render('contact', {
+            title: 'Contact Us',
+            header: 'Get in Touch with Us',
+            message: 'We would love to hear from you! Get in touch with us using the form below.',
+            email: 'mj.interiordesignstudio@gmail.com',
+            phone: '+962792905439',
+            address: 'An-Nahdah Street, Tariq, Building 30, Amman, Jordan',
+            submissions, // Updated data
+            successMessage: 'Thank you! Your message has been sent successfully.',
+            errorMessage: null
+        });
+    } catch (error) {
+        console.error('Error adding contact inquiry:', error);
+        const submissions = await Contact.findAll();
+        res.render('contact', {
+            title: 'Contact Us',
+            header: 'Get in Touch with Us',
+            message: 'We would love to hear from you! Get in touch with us using the form below.',
+            email: 'mj.interiordesignstudio@gmail.com',
+            phone: '+962792905439',
+            address: 'An-Nahdah Street, Tariq, Building 30, Amman, Jordan',
+            submissions,
+            successMessage: null,
+            errorMessage: 'Oops! There was an error sending your message. Please try again later.'
+        });
+    }
+});
+
+// Read all Contact inquiry
+app.get('/contact', async (req, res) => {
+    try {
+        const submissions = await Contact.findAll(); // Fetch all submissions
+        res.render('contact', {
+            title: 'Contact Us',
+            header: 'Get in Touch with Us',
+            message: 'We would love to hear from you! Get in touch with us using the form below.',
+            email: 'mj.interiordesignstudio@gmail.com',
+            phone: '+962792905439',
+            address: 'An-Nahdah Street, Tariq, Building 30, Amman, Jordan',
+            submissions, // Pass the fetched data
+            successMessage: null,
+            errorMessage: null
+        });
+    } catch (error) {
+        console.error('Error retrieving submissions:', error);
+        res.render('contact', {
+            title: 'Contact Us',
+            header: 'Get in Touch with Us',
+            message: 'We would love to hear from you! Get in touch with us using the form below.',
+            email: 'mj.interiordesignstudio@gmail.com',
+            phone: '+962792905439',
+            address: 'An-Nahdah Street, Tariq, Building 30, Amman, Jordan',
+            submissions: [], // Fallback: no data
+            successMessage: null,
+            errorMessage: 'Failed to load submissions. Please try again later.'
+        });
+    }
+});
+
+// Update a Contact inquiry
+app.post('/contact/update/:id', async (req, res) => {
+    try {
+        await Contact.update(req.body, { where: { id: req.params.id } });
+        console.log("Contact inquiry updated successfully");
+        res.redirect('/contact');
+    } catch (error) {
+        console.error('Error updating contact inquiry:', error);
+        res.status(500).send('Error updating contact inquiry');
+    }
+});
+
+// Delete a Contact inquiry
+app.post('/contact/delete/:id', async (req, res) => {
+    try {
+        await Contact.destroy({ where: { id: req.params.id } });
+        console.log("Contact inquiry deleted successfully");
+        res.redirect('/contact');
+    } catch (error) {
+        console.error('Error deleting contact inquiry:', error);
+        res.status(500).send('Error deleting contact inquiry');
+    }
+});
 
 // Other Routes
 app.get('/', (req, res) => {
@@ -385,17 +473,6 @@ app.get('/faq', (req, res) => {
         title: 'FAQs', 
         header: 'Frequently Asked Questions',
         message: 'Find answers to common questions about our services and offerings.',
-    });
-});
-
-app.get('/contact', (req, res) => {
-    res.render('contact', { 
-        title: 'Contact Us', 
-        header: 'Get in Touch with Us', 
-        message: 'We would love to hear from you! Get in touch with us using the form below.',
-        email: 'mj.interiordesignstudio@gmail.com', 
-        phone: '+962792905439', 
-        address: 'An-Nahdah Street, Tariq, Building 30, Amman, Jordan',
     });
 });
 
