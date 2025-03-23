@@ -8,43 +8,122 @@
     <link rel="stylesheet" href="/css/main.css">
     <title><%= title %></title>
 </head>
-<body class="bg-gray-100">
+<body class="bg-light">
 
   <%- include('partials/header') %>
 
   <!-- Projects Section -->
-  <section class="projects">
-    <div class="projects-header">
-        <h1><%= header %></h1>
-        <p><%= message %></p>
+  <section class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Our Featured Projects</h1>
+        <p class="lead">Explore some of the stunning spaces we've transformed into masterpieces.</p>
     </div>
-    <div class="projects-list">
+
+    <!-- Existing Projects -->
+    <div class="row g-4">
         <!-- Project 1 -->
-        <a href="/project1" class="project-item">
-            <img src="/img/project1/project1-1.png" alt="Project 1" class="project-image">
-            <div class="project-content">
-                <div class="project-name">Luxury Apartment</div>
-                <div class="project-location">Jabal Amman, Jordan</div>
-            </div>
-        </a>
+        <div class="col-md-4">
+            <a href="/project1" class="text-decoration-none">
+                <div class="card shadow-sm h-100">
+                    <img src="/img/project1/project1-1.png" class="card-img-top" alt="Luxury Apartment">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Luxury Apartment</h5>
+                        <p class="text-muted mb-1"><strong>Location:</strong> Jabal Amman, Jordan</p>
+                    </div>
+                </div>
+            </a>
+        </div>
         <!-- Project 2 -->
-        <a href="/project2" class="project-item">
-            <img src="/img/project2/project2-1.PNG" alt="Project 2" class="project-image">
-            <div class="project-content">
-                <div class="project-name">Cantilever Stairs</div>
-                <div class="project-location">Dabouq District, Amman</div>
-            </div>
-        </a>
+        <div class="col-md-4">
+            <a href="/project2" class="text-decoration-none">
+                <div class="card shadow-sm h-100">
+                    <img src="/img/project2/project2-1.PNG" class="card-img-top" alt="Cantilever Stairs">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Cantilever Stairs</h5>
+                        <p class="text-muted mb-1"><strong>Location:</strong> Dabouq District, Amman</p>
+                    </div>
+                </div>
+            </a>
+        </div>
         <!-- Project 3 -->
-        <a href="/project3" class="project-item">
-            <img src="/img/project3/project3-1.png" alt="Project 3" class="project-image">
-            <div class="project-content">
-                <div class="project-name">Luxury Villa</div>
-                <div class="project-location">Dabouq District, Amma</div>
-            </div>
-        </a>
+        <div class="col-md-4">
+            <a href="/project3" class="text-decoration-none">
+                <div class="card shadow-sm h-100">
+                    <img src="/img/project3/project3-1.png" class="card-img-top" alt="Luxury Villa">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Luxury Villa</h5>
+                        <p class="text-muted mb-1"><strong>Location:</strong> Dabouq District, Amman</p>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
-  </section>
+
+    <!-- CRUD Operations Projects -->
+    <div class="mt-5">
+        <h2 class="text-center mb-4">Manage Projects</h2>
+        <div class="row g-4">
+            <% projects.forEach(project => { %>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="/img/<%= project.image %>" alt="<%= project.title %>" class="project-image">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= project.title %></h5>
+                        <p class="text-muted"><strong>Location:</strong> <%= project.location %></p>
+                        <p class="text-muted"><strong>Designer:</strong> <%= project.designer %></p>
+                        <p class="card-text"><%= project.description %></p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <form action="/projects/update/<%= project.id %>" method="POST" class="d-inline-block">
+                            <input type="text" name="title" value="<%= project.title %>" class="form-control mb-2" required>
+                            <input type="text" name="location" value="<%= project.location %>" class="form-control mb-2" required>
+                            <input type="text" name="designer" value="<%= project.designer %>" class="form-control mb-2" required>
+                            <textarea name="description" class="form-control mb-2" required><%= project.description %></textarea>
+                            <input type="text" name="image" value="<%= project.image %>" class="form-control mb-2">
+                            <button type="submit" class="btn btn-warning btn-sm">Update</button>
+                        </form>
+                        <form action="/projects/delete/<%= project.id %>" method="POST" class="d-inline-block">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <!-- Add New Project Form -->
+    <div class="mt-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="form-container w-50">
+            <h2 class="text-center mb-4">Add a New Project</h2>
+            <form action="/projects" method="POST" class="p-4 border rounded bg-white shadow-sm">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="Project Title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" id="location" name="location" class="form-control" placeholder="Project Location" required>
+                </div>
+                <div class="mb-3">
+                    <label for="designer" class="form-label">Designer</label>
+                    <input type="text" id="designer" name="designer" class="form-control" placeholder="Project Designer" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Project Description" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image URL</label>
+                    <input type="text" id="image" name="image" class="form-control" placeholder="Image URL">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Add Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
   <%- include('partials/footer') %>
 
