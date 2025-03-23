@@ -1,8 +1,27 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const Sequelize = require("sequelize");
 
 const HTTP_PORT = process.env.PORT || 8080;
+
+// Set up Sequelize for PostgreSQL
+const sequelize = new Sequelize("neondb", "neondb_owner", "npg_ky19aGfIFszq", {
+    host: "ep-cool-boat-a543rznf-pooler.us-east-2.aws.neon.tech",
+    dialect: 'postgres',
+    port: 5432,
+    dialectOptions: {
+        ssl: { rejectUnauthorized: false },
+    },
+});
+
+sequelize.authenticate()
+    .then(() => console.log('Database connected successfully.'))
+    .catch(err => console.log('Database connection error:', err));
+
+// Middleware to parse JSON and form data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
@@ -130,6 +149,9 @@ app.get('/contact', (req, res) => {
     });
 });
 
-app.listen(HTTP_PORT, () => {
-    console.log(`Server listening on: ${HTTP_PORT}`);
+sequelize.sync().then(() => {
+    app.listen(HTTP_PORT, () => {
+        console.log(`Server listening on: ${HTTP_PORT}`);
+    });
 });
+

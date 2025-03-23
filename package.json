@@ -31,8 +31,11 @@
     "daisyui": "^4.12.24",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "pg": "^8.14.1",
+    "pg-hstore": "^2.3.4",
     "postcss": "^8.5.3",
-    "postcss-import": "^16.1.0"
+    "postcss-import": "^16.1.0",
+    "sequelize": "^6.37.6"
   },
   "devDependencies": {
     "sass": "^1.85.1",
