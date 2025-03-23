@@ -28,6 +28,13 @@ const Project = sequelize.define("Project", {
     image: { type: Sequelize.STRING, allowNull: true }
 });
 
+// Define Gallery model
+const Gallery = sequelize.define("Gallery", {
+    imageUrl: { type: Sequelize.STRING, allowNull: false },
+    altText: { type: Sequelize.STRING, allowNull: false }
+});
+
+
 // Middleware to parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
