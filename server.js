@@ -41,6 +41,15 @@ const Review = sequelize.define("Review", {
     text: { type: Sequelize.TEXT, allowNull: false },
 });
 
+// Define TeamMember model
+const TeamMember = sequelize.define("TeamMember", {
+    name: { type: Sequelize.STRING, allowNull: false },
+    title: { type: Sequelize.STRING, allowNull: false },
+    description: { type: Sequelize.TEXT, allowNull: false },
+    image: { type: Sequelize.STRING, allowNull: true }
+});
+
+
 // Middleware to parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
