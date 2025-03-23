@@ -208,6 +208,53 @@ app.post('/reviews/delete/:id', async (req, res) => {
     }
 });
 
+// Read all TeamMember
+app.get('/team', async (req, res) => {
+    try {
+        const team = await TeamMember.findAll();
+        res.render('team', { title: 'Meet the Team', header: 'Our Team', message: 'Discover the talented individuals behind our success.', team });
+    } catch (error) {
+        console.error('Error retrieving team members:', error);
+        res.status(500).send('Error retrieving team members');
+    }
+});
+
+// Create a TeamMember
+app.post('/team', async (req, res) => {
+    try {
+        await TeamMember.create(req.body);
+        console.log("Team member added successfully");
+        res.redirect('/team');
+    } catch (error) {
+        console.error('Error adding team member:', error);
+        res.status(500).send('Error adding team member');
+    }
+});
+
+// Update a TeamMember
+app.post('/team/update/:id', async (req, res) => {
+    try {
+        await TeamMember.update(req.body, { where: { id: req.params.id } });
+        console.log("Team member updated successfully");
+        res.redirect('/team');
+    } catch (error) {
+        console.error('Error updating team member:', error);
+        res.status(500).send('Error updating team member');
+    }
+});
+
+// Delete a TeamMember
+app.post('/team/delete/:id', async (req, res) => {
+    try {
+        await TeamMember.destroy({ where: { id: req.params.id } });
+        console.log("Team member deleted successfully");
+        res.redirect('/team');
+    } catch (error) {
+        console.error('Error deleting team member:', error);
+        res.status(500).send('Error deleting team member');
+    }
+});
+
 // Other Routes
 app.get('/', (req, res) => {
     res.render('home', { 
@@ -268,14 +315,6 @@ app.get('/project3', (req, res) => {
         designer: 'Wissam Hijazi',
         description: 'Situated in the prestigious Abdoun area of Amman, this luxury villa project showcases exceptional door work throughout the property. Our work included designing and crafting custom wooden doors with a variety of finishes to complement the villa interior design. Each door was meticulously constructed to ensure both functionality and aesthetic appeal, enhancing the overall elegance of the residence.',
     });
-});
-
-app.get('/team', (req, res) => {
-    res.render('team', { 
-        title: 'Our Delicious Gallery', 
-        header: 'Meet the Team',
-        message: 'Discover the talented individuals behind our success.',
-     });
 });
 
 app.get('/blog', (req, res) => {
