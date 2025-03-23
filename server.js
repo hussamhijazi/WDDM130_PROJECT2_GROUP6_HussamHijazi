@@ -94,6 +94,58 @@ app.post('/projects/delete/:id', async (req, res) => {
     }
 });
 
+// Read all Gallery
+app.get('/gallery', async (req, res) => {
+    try {
+        const images = await Gallery.findAll();
+        res.render('gallery', { 
+            title: 'Gallery',
+            header: 'Our Gallery',
+            message: 'Browse through our collection of stunning images.',
+            images
+        });
+    } catch (error) {
+        console.error('Error retrieving gallery images:', error);
+        res.status(500).send('Error retrieving gallery images');
+    }
+});
+
+// Create a Gallery
+app.post('/gallery', async (req, res) => {
+    try {
+        await Gallery.create(req.body);
+        console.log("Image added successfully to gallery");
+        res.redirect('/gallery');
+    } catch (error) {
+        console.error('Error adding gallery image:', error);
+        res.status(500).send('Error adding gallery image');
+    }
+});
+
+// Update a Gallery
+app.post('/gallery/update/:id', async (req, res) => {
+    try {
+        await Gallery.update(req.body, { where: { id: req.params.id } });
+        console.log("Gallery image updated successfully");
+        res.redirect('/gallery');
+    } catch (error) {
+        console.error('Error updating gallery image:', error);
+        res.status(500).send('Error updating gallery image');
+    }
+});
+
+// Delete a Gallery
+app.post('/gallery/delete/:id', async (req, res) => {
+    try {
+        await Gallery.destroy({ where: { id: req.params.id } });
+        console.log("Gallery image deleted successfully");
+        res.redirect('/gallery');
+    } catch (error) {
+        console.error('Error deleting gallery image:', error);
+        res.status(500).send('Error deleting gallery image');
+    }
+});
+
 // Other Routes
 app.get('/', (req, res) => {
     res.render('home', { 
@@ -153,14 +205,6 @@ app.get('/project3', (req, res) => {
         location: 'Abdoun, Amman',
         designer: 'Wissam Hijazi',
         description: 'Situated in the prestigious Abdoun area of Amman, this luxury villa project showcases exceptional door work throughout the property. Our work included designing and crafting custom wooden doors with a variety of finishes to complement the villa interior design. Each door was meticulously constructed to ensure both functionality and aesthetic appeal, enhancing the overall elegance of the residence.',
-    });
-});
-
-app.get('/gallery', (req, res) => {
-    res.render('gallery', { 
-        title: 'Our Gallery', 
-        header: 'Gallery' ,
-        message: 'Explore our collection of stunning images showcasing our work.',
     });
 });
 
